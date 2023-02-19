@@ -1,3 +1,8 @@
+<?php 
+	$billing_details = json_decode($order['billing_address'], true);
+	$shipping_details = json_decode($order['shipping_address'], true);
+	$sub_total = 0;
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,8 +22,8 @@
 		<!-- font awesome library-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 		<!-- main style -->
-		<link rel="stylesheet/less" type="text/css" href="../Assets/style/order_view.less" />
-		<link rel="stylesheet/less" type="text/css" href="../assets/style/admin_nav.less">
+		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/order_view.less') ?>" />
+		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/admin_nav.less') ?>">
 		<!-- less library -->
 		<script src="https://cdn.jsdelivr.net/npm/less@4"></script>
 	</head>
@@ -47,21 +52,21 @@
 		<!-------------Order Info---------------->
 		<div class="row gx-4">
 			<div class="col-9 col-md-3 m-auto mb-3 bg-white p-4">
-				<p class="mb-4">Order ID: 1</p>
+				<p class="mb-4">Order ID: <?= $order['id'] ?></p>
 				<!-------------Shipping Info---------------->
 				<p class="fw-bold">Customer shipping info:</p>
-				<p>Name: bob</p>
-				<p>Address: 123 dojo way</p>
-				<p>City: seatle</p>
-				<p>State: wa</p>
-				<p>Zip: 98133</p>
+				<p>Name: <?= $billing_details['first_name'] . ' ' . $billing_details['last_name'] ?></p>
+				<p>Address: <?= $billing_details['address'] ?></p>
+				<p>City: <?= $billing_details['city'] ?></p>
+				<p>State: <?= $billing_details['state'] ?></p>
+				<p>Zip: <?= $billing_details['zip_code'] ?></p>
 				<!-------------Billing Info---------------->
 				<p class="fw-bold">Customer Billing info:</p>
-				<p>Name: bob</p>
-				<p>Address: 123 dojo way</p>
-				<p>City: seatle</p>
-				<p>State: wa</p>
-				<p>Zip: 98133</p>
+				<p>Name: <?= $shipping_details['first_name'] . ' ' . $shipping_details['last_name'] ?></p>
+				<p>Address: <?= $shipping_details['address'] ?></p>
+				<p>City: <?= $shipping_details['city'] ?></p>
+				<p>State: <?= $shipping_details['state'] ?></p>
+				<p>Zip: <?= $shipping_details['zip_code'] ?></p>
 			</div>
 			<div class="col row gy-0">
 				<!-------------Ordered Items---------------->
@@ -71,96 +76,28 @@
 							<tr>
 								<th scope="col-1">ID</th>
 								<th scope="col-1">Item</th>
-								<th scope="col-1">price</th>
+								<th scope="col-1">Price</th>
 								<th scope="col-1">Quantity</th>
 								<th scope="col-1">Total</th>
 							</tr>
 						</thead>
 						<tbody>
+<?php 
+	if(!empty($order_details)){
+		foreach($order_details as $order_detail){
+			$sub_total += ($order_detail['price'] * $order_detail['quantity']);
+?>
 							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
+								<td><?= $order_detail['product_id'] ?></td>
+								<td><?= $order_detail['product_name'] ?></td>
+								<td>$<?= number_format($order_detail['price'], 2) ?></td>
+								<td><?= $order_detail['quantity'] ?></td>
+								<td>$<?= number_format($order_detail['total'], 2) ?></td>
 							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>Cup</td>
-								<td>$1000</td>
-								<td>5</td>
-								<td>$1000.10</td>
-							</tr>
+<?php
+		}
+	}
+?>
 						</tbody>
 					</table>
 				</div>
@@ -171,10 +108,10 @@
 					</div>
 					<!-------------Total---------------->
 					<div class="col-12 col-md-6">
-						<div class="w-50 m-auto fs-5 text-center">
-							<p c>Subtotal: $123.43</p>
-							<p>Shipping: $123.43</p>
-							<p>Total Price: $123.43</p>
+						<div class="w-50 m-auto fs-5 text-end">
+							<p>Subtotal: $<?= number_format($sub_total, 2) ?></p>
+							<p>Shipping: $<?= number_format($order['shipping_fee'], 2) ?></p>
+							<p>Total Price: $<?= number_format($sub_total + $order['shipping_fee'], 2) ?></p>
 						</div>
 					</div>
 				</div>

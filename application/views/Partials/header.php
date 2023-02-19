@@ -27,6 +27,15 @@
 		<script src="https://cdn.jsdelivr.net/npm/less@4"></script>
 
 		<!-- custom JS -->
-		<script src="<?= base_url('assets/script/user_interaction.js') ?>"></script>
+		<!-- <script src="<?= base_url('assets/script/user_interaction.js') ?>"></script> -->
+<?php 
+	if(!empty($scripts)){
+		foreach($scripts as $script){
+?>
+		<script src="<?= base_url('assets/js/' . $script) ?>"></script>
+<?php
+		}
+	}
+?>
 	</head>
 	<body>

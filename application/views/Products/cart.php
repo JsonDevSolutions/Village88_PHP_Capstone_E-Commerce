@@ -65,203 +65,156 @@
         <table class="table table-dark table-striped">
             <thead>
                 <tr>
-                    <th class="col-1" scope="col-1">Select</th>
-                    <th class="col" scope="col-1">item name</th>
-                    <th class="col-2" scope="col-1">price</th>
-                    <th class="col-2" scope="col-1">quantity</th>
-                    <th class="col-2" scope="col-1">total</th>
+                    <th class="col" scope="col-1">Item</th>
+                    <th class="col-2" scope="col-1">Price</th>
+                    <th class="col-2" scope="col-1">Quantity</th>
+                    <th class="col-2" scope="col-1">Total</th>
                 </tr>
             </thead>
             <tbody>
+<?php
+    $total = 0;
+    if(!empty($products)){
+        foreach($products as $product){
+            $total += $product['price'] * $cart[$product['id']];
+?>
                 <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
+                    <td><?= $product['name'] ?></td>
+                    <td><?= '$' . number_format($product['price'], 2) ?></td>
+                    <td>
+                        <span><?= $cart[$product['id']] ?></span>
+                        <form action="" method="post" class="ms-5" style="display:inline-block;">
+                                <button class="btn btn-danger btn-sm" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                </button>
+                        </form>
+                    </td>
+                    <td><?= '$' . number_format(($product['price'] * $cart[$product['id']]), 2) ?></td>
                 </tr>
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>   
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
-
-                <tr>
-                    <td class="text-center"><input type="checkbox"></td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>@sample</td>
-                </tr>
+<?php
+        }
+    }
+?>
             </tbody>
         </table>
     </div>
-     <!---------------------Total-------------------------------->
+    <!---------------------Total-------------------------------->
     <div class="total mb-5 text-light">
-        <p ">TOTAL: $1000</p>
-        <input type="button" class="btn btn-success" value="Continue Shopping">
+        <p class="text-end">TOTAL: $<?= number_format($total, 2) ?></p>
+        <a href="<?= base_url('products/show_all/1') ?>" class="btn btn-success">Continue Shopping</a>
     </div>
-     <!---------------------Information-------------------------------->
-    <div class="container text-light">
-        <div class="row">
-             <!---------------------Shipping information-------------------------------->
-            <div class="col-12 col-lg-6">
-                <h2 class="row">Shipping Information</h2>
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label mb-1" for="defaultCheck1">use default</label> 
-                <!---------------------Shipping Input fields------------------------------->
-                <div class="row">
-                    <p class="col-4">First name: </p>
-                    <input class="col-8" type="text">
+    <!---------------------Information-------------------------------->
+    <form action="<?= base_url('orders/place_order') ?>" method="post" autocomplete="off" class="row g-3 needs-validation">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+        <div class="container text-light">
+            <div class="row">
+                <!---------------------Shipping information-------------------------------->
+                <div class="col-12 col-lg-6">
+                    <h2 class="row">Shipping Information</h2>
+                    <!---------------------Shipping Input fields------------------------------->
+                    <div class="row">
+                        <p class="col-4">First name: </p>
+                        <input class="col-8" type="text" name="first_name[]" required>
+                    </div>
+
+                    <div class="row">
+                        <p class="col-4">Last name: </p>
+                        <input class="col-8" type="text" name="last_name[]" required>
+                    </div>
+                    
+                    <div class="row">
+                        <p class="col-4">Address: </p>
+                        <input class="col-8" type="text" name="address_one[]">
+                    </div>
+
+                    <div class="row">
+                        <p class="col-4">Address 2: </p>
+                        <input class="col-8" type="text" name="address_two[]">
+                    </div>
+
+                    <div class="row">
+                        <p class="col-4">City: </p>
+                        <input class="col-8" type="text" name="city[]">
+                    </div>
+
+                    <div class="row">
+                        <p class="col-4">State: </p>
+                        <input class="col-8" type="text"  name="state[]">
+                    </div>
+
+                    <div class="row">
+                        <p class="col-4">Zip code: </p>
+                        <input class="col-8" type="text" name="zip_code[]">
+                    </div>
                 </div>
 
-                <div class="row">
-                    <p class="col-4">Last name: </p>
-                    <input class="col-8" type="text">
-                </div>
+                <div class="col-12 col-lg-6">
+                    <!---------------------Billing Information-------------------------------->
+                    <h2 class="row">Billing Information</h2>
+                    <input class="form-check-input" type="checkbox" name="same_address" value="same" id="defaultCheck1">
+                    <label class="form-check-label mb-1" for="defaultCheck1">Same as shipping</label> 
+                    <!---------------------Billing Inputfields------------------------------->
+                    <div class="row">
+                        <p class="col-4">First name: </p>
+                        <input class="col-8" type="text" name="first_name[]">
+                    </div>
                 
-                <div class="row">
-                    <p class="col-4">Address: </p>
-                    <input class="col-8" type="text">
-                </div>
+                    <div class="row">
+                        <p class="col-4">Last name: </p>
+                        <input class="col-8" type="text"  name="last_name[]">
+                    </div>
 
-                <div class="row">
-                    <p class="col-4">Address 2: </p>
-                    <input class="col-8" type="text">
-                </div>
+                    <div class="row">
+                        <p class="col-4">Address: </p>
+                        <input class="col-8" type="text" name="address_one[]">
+                    </div>
 
-                <div class="row">
-                    <p class="col-4">City: </p>
-                    <input class="col-8" type="text">
-                </div>
+                    <div class="row">
+                        <p class="col-4">Address 2: </p>
+                        <input class="col-8" type="text" name="address_two[]">
+                    </div>
 
-                <div class="row">
-                    <p class="col-4">State: </p>
-                    <input class="col-8" type="text">
-                </div>
+                    <div class="row">
+                        <p class="col-4">City: </p>
+                        <input class="col-8" type="text" name="city[]">
+                    </div>
 
-                <div class="row">
-                    <p class="col-4">Zip code: </p>
-                    <input class="col-8" type="text">
-                </div>
-            </div>
+                    <div class="row">
+                        <p class="col-4">State: </p>
+                        <input class="col-8" type="text"  name="state[]">
+                    </div>
 
-            <div class="col-12 col-lg-6">
-                 <!---------------------Billing Information-------------------------------->
-                <h2 class="row">Billing Information</h2>
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label mb-1" for="defaultCheck1">Same as shipping</label> 
-                <!---------------------Billing Inputfields------------------------------->
-                <div class="row">
-                    <p class="col-4">First name: </p>
-                    <input class="col-8" type="text">
-                </div>
-              
-                <div class="row">
-                    <p class="col-4">Last name: </p>
-                    <input class="col-8" type="text">
-                </div>
+                    <div class="row">
+                        <p class="col-4">Zip code: </p>
+                        <input class="col-8" type="text" name="zip_code[]">
+                    </div>
 
-                <div class="row">
-                    <p class="col-4">Address: </p>
-                    <input class="col-8" type="text">
-                </div>
+                    <div class="row">
+                        <p class="col-4">Card: </p>
+                        <input class="col-8" type="text">
+                    </div>
+                    
+                    <div class="row">
+                        <p class="col-4">Security code: </p>
+                        <input class="col-8" type="text">
+                    </div>
 
-                <div class="row">
-                    <p class="col-4">Address 2: </p>
-                    <input class="col-8" type="text">
-                </div>
-
-                <div class="row">
-                    <p class="col-4">City: </p>
-                    <input class="col-8" type="text">
-                </div>
-
-                <div class="row">
-                    <p class="col-4">State: </p>
-                    <input class="col-8" type="text">
-                </div>
-
-                <div class="row">
-                    <p class="col-4">Zip code: </p>
-                    <input class="col-8" type="text">
-                </div>
-
-                <div class="row">
-                    <p class="col-4">Card: </p>
-                    <input class="col-8" type="text">
-                </div>
-                
-                <div class="row">
-                    <p class="col-4">Security code: </p>
-                    <input class="col-8" type="text">
-                </div>
-
-                <div class="row">
-                    <p class="col-4">Expiratione: </p>
-                    <input class="col-3" type="text">
-                    <p class="col-2 text-center">/</p>
-                    <input class="col-3" type="text">
+                    <div class="row">
+                        <p class="col-4">Expiratione: </p>
+                        <input class="col-3" type="text">
+                        <p class="col-2 text-center">/</p>
+                        <input class="col-3" type="text">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!---------------------Pay button------------------------------->
-    <div class="pay">
-        <input type="button" class="btn btn-primary mt-3" value="Pay $1000">
-    </div>
-
-    
-
+        <!---------------------Pay button------------------------------->
+        <div class="pay">
+            <input type="submit" class="btn btn-primary mt-3" value="Pay $<?= number_format($total, 2) ?>">
+        </div>
+    </form>
 </body>
 </html>

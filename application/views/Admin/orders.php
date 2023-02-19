@@ -6,10 +6,11 @@
 		<div class="mb-3 row">
             <!-----Search------------------------------------>
 			<div class="col-6 col-md-3">
-				<div class="input-group">
-					<button class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></button>
-					<input type="text" class="form-control" placeholder="search" aria-label="search" aria-describedby="basic-addon1" />
-				</div>
+				<form action="orders/get_list" method="post">
+					<div class="input-group">
+						<input type="text" class="form-control search_order" placeholder="Search Customer Name or Order ID" name="search_order"/>
+					</div>
+				</form>
 			</div>
 			<div class="col-0 col-md-7 space"></div>
 			<div class="col-6 col-md-2">
@@ -27,7 +28,7 @@
 			<table class="table table-light table-striped">
 				<thead>
 					<tr>
-						<th class="col-1" scope="col-1">Order id</th>
+						<th class="col-1" scope="col-1">Order ID</th>
 						<th class="col-2" scope="col-1">Name</th>
 						<th class="col-1" scope="col-1">Date</th>
 						<th class="col" scope="col-1">Billing address</th>
@@ -36,12 +37,19 @@
 					</tr>
 				</thead>
 				<tbody>
+<?php 
+	if(!empty($orders)){
+		foreach($orders as $order){
+			$billing_details = json_decode($order['billing_address'], true);
+			$customer_name = $billing_details['first_name'] . ' ' . $billing_details['last_name'];
+			$billing_address = $billing_details['address'] . ' ' . $billing_details['address_two'] . ' ' . $billing_details['city'] . ' ' . $billing_details['state'] . ' ' . $billing_details['zip_code'];
+?>
 					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
+						<td><a href="<?= base_url('orders/show/' . $order['id']) ?>"><?= $order['id'] ?></a></td>
+						<td><?= $customer_name ?></td>
+						<td><?= $order['order_date'] ?></td>
+						<td><?= $billing_address ?></td>
+						<td>$<?= $order['total_amount'] ?></td>
 						<td>
 							<select class="form-select" aria-label="Default select example">
 								<option value="1">Order in process</option>
@@ -50,104 +58,10 @@
 							</select>
 						</td>
 					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><a href="">100</a></td>
-						<td>Bob</td>
-						<td>9/6/2014</td>
-						<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim, qui,</td>
-						<td>$143</td>
-						<td>
-							<select class="form-select" aria-label="Default select example">
-								<option value="1">Order in process</option>
-								<option value="2">Shipped</option>
-								<option value="3">Cancelled</option>
-							</select>
-						</td>
-					</tr>
+<?php
+		}
+	}
+?>
 				</tbody>
 			</table>
 		</div>

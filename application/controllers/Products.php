@@ -1,4 +1,6 @@
-<?php 
+<?php
+    defined('BASEPATH') OR exit('No direct script access allowed'); 
+
     Class Products extends CI_Controller{
         public function __construct(){
             parent::__construct();
@@ -6,17 +8,18 @@
             $this->load->model('Product');
         }
         public function index(){
-            $products = $this->Product->get_all_product_list();
+            $products = $this->Product->get_all_product_list(5, (1 * 5 - 5));
             $this->load->view('admin/admin_products', array('title' => 'Products Page', 'products' => $products));
         }
         public function home(){
-            $products = $this->Product->get_all_product_list();
-            $this->load->view('products/home', array('title' => 'Products Page', 'products' => $products));
+            // $products = $this->Product->get_all_product_list(5, (1 * 5 - 5));
+            // $this->load->view('products/home', array('title' => 'Products Page', 'products' => $products));
+            $this->load->view('products/home');
         }
         public function show_all($page_number){
             $categories = $this->Category->categories_product_count();
-            $products = $this->Product->get_all_product_list(5, ($page_number * 5 - 5));
-            $total_pages = ceil($this->Product->get_all_product_count()->count / 5);
+            $products = $this->Product->get_all_product_list(10, ($page_number * 10 - 10));
+            $total_pages = ceil($this->Product->get_all_product_count()->count / 10);
             $this->load->view('products/catalog', array('title' => 'All Products', 'products' => $products, 'categories' => $categories, 'total_pages' => $total_pages, 'page_number' => $page_number));
         }
         public function show($id){

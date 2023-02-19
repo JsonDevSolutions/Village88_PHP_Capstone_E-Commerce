@@ -11,8 +11,36 @@
             $values = array($first_name, $last_name, $email, $contact_number, $password, $salt, '1');
             return $this->db->query($query, $values);
         }
-        // private check_user_count(){
-
-        // }
+        public function check_admin_email($email){
+            $email = $this->security->xss_clean($email);
+            return $this->db->query("SELECT * FROM users WHERE email = ? and is_admin = ?", array($email, 1))->row_array();
+        }
+        // Validations
+        public function validate_login_data(){
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email');
+            $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+            if($this->form_validation->run() == FALSE){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+        public function validate_admin_login($user, $password){
+            $user = $this->security->xss_clean($user);
+            $password = $this->security->xss_clean($password);
+            if($user != NULL){
+                $salt = $user['salt'];
+                $encrypted_password = md5($password . '' . $salt);
+                if($user['password'] === $encrypted_password){
+                    $this->session->set_userdata('admin_user_id', $user['id']);
+                    return TRUE;
+                }else{
+                    return FALSE;
+                }
+            }else{
+                return FALSE;
+            }
+        }
     }
 ?>

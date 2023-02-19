@@ -44,15 +44,15 @@
 				</div>
 	
 				<div class="col-auto col-lg-1 text-center">
-					<a href="home.html" class="text-light w-100">HOME</a>
+					<a href="<?= base_url('products/home') ?>" class="text-light w-100">HOME</a>
 				</div>
 	
 				<div class="col-auto col-lg-1 text-center">
-					<a href="<?= base_url('products/show_all') ?>" class="text-light w-100">CATALOG</a>
+					<a href="<?= base_url('products/show_all/1') ?>" class="text-light w-100">CATALOG</a>
 				</div>
 	
-				<div class="col-auto col-lg-1 text-center align-items-center dropdown">
-					<a class="text-light" href="<?= base_url('users') ?>">Login</a>
+				<!-- <div class="col-auto col-lg-1 text-center align-items-center dropdown"> -->
+					<!-- <a class="text-light" href="<?= base_url('users') ?>">Login</a> -->
 					<!-- <a class="dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					Michael Choi
 					</a>
@@ -60,10 +60,10 @@
 						<li><a class="dropdown-item" href="../Users/Profile.html"><i class="fas fa-user-alt"></i>Edit Profile</button></a></li>
 						<li><a class="dropdown-item" href="../Users/login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 					</ul> -->
-				</div>
+				<!-- </div> -->
 				
 				<div class="col-auto col-lg-1 mt-1 text-center">
-					<a href="cart.html" class="text-light w-100 cart"><i class="fas fa-shopping-cart"></i><div class="cart-count ">12</div></a>
+					<a href="<?= base_url('carts/cart_list') ?>" class="text-light w-100 cart"><i class="fas fa-shopping-cart"></i><div class="cart-count">0</div></a>
 				</div>
 	
 			</div>
