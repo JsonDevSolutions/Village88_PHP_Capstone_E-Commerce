@@ -22,6 +22,22 @@
             }
             echo count($this->session->userdata('cart'));
         }
+        public function remove_cart($product_id){
+            $cart = $this->session->userdata('cart');
+            unset($cart[$product_id]);
+            $this->session->set_userdata('cart', $cart);
+            if(!empty($this->session->userdata('cart'))){
+                echo count($this->session->userdata('cart'));
+            }else{
+                echo "0";
+            }
+        }
+        public function update_item_quantity($product_id, $quantity){
+            $cart = $this->session->userdata('cart');
+            $cart[$product_id] = $quantity;
+            $this->session->set_userdata('cart', $cart);
+            $this->cart_list_html();
+        }
         public function cart_count(){
             if(!empty($this->session->userdata('cart'))){
                 echo count($this->session->userdata('cart'));
@@ -30,14 +46,18 @@
             }
         }
         public function cart_list(){
+            $scripts = array('cart.js');  
+            $this->load->view('products/cart', array('scripts' => $scripts));
             // $this->output->enable_profiler(TRUE); 
+        }
+        public function cart_list_html(){
             if(empty($this->session->userdata('cart'))){
-                $this->load->view('products/cart');
+                $this->load->view('partials/cart_list');
             }else{
                 $cart = $this->session->userdata('cart');
                 $product_ids = implode(', ', array_keys($cart));
-                $products = $this->Product->get_carts_product(explode(',', $product_ids));    
-                $this->load->view('products/cart', array('products' => $products, 'cart' => $cart));
+                $products = $this->Product->get_carts_product(explode(',', $product_ids));  
+                $this->load->view('partials/cart_list', array('products' => $products, 'cart' => $cart));
             }
         }
     }

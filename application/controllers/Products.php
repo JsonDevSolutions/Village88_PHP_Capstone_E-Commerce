@@ -17,24 +17,113 @@
             $this->load->view('products/home');
         }
         public function show_all($page_number){
+            // session_destroy();
+            // var_dump($this->session->userdata());
+            // exit;
+            // $this->session->unset_userdata('search_product');
+            // $this->session->unset_userdata('sort_display');
+            // exit;
             $categories = $this->Category->categories_product_count();
-            $products = $this->Product->get_all_product_list(10, ($page_number * 10 - 10));
-            $total_pages = ceil($this->Product->get_all_product_count()->count / 10);
-            $this->load->view('products/catalog', array('title' => 'All Products', 'products' => $products, 'categories' => $categories, 'total_pages' => $total_pages, 'page_number' => $page_number));
+            $scripts = array('catalog.js');
+            $this->load->view('products/catalog', array('title' => 'All Products', 'categories' => $categories, 'page_number' => $page_number, 'scripts' => $scripts));
         }
+        // Show individual Image
         public function show($id){
             $product = $this->Product->get_product_by_id($id);
+            $scripts = array('cart.js');
             $similar_products = $this->Product->get_similar_products($id, $product['category_id']);
-            $this->load->view('products/show_product', array('title' => '(Product Page)' . $product['name'], 'product' => $product, 'similar_products' => $similar_products));
+            $this->load->view('products/show_product', array('title' => '(Product Page)' . $product['name'], 'product' => $product, 'similar_products' => $similar_products, 'scripts' => $scripts));
         }
+        // Products Per Category and Page Number
         public function category($category_id, $page_number){
-            $products = $this->Product->get_product_per_category($category_id, 2, ($page_number * 2 - 2));
+            $scripts = array('catalog.js');
+            $sort_by = 2;
+            $products = $this->Product->get_product_per_category($category_id, "", $sort_by, 2, ($page_number * 2 - 2));
             $categories = $this->Category->categories_product_count();
             $category_name = $this->Category->get_category_name($category_id)->name;
             $total_pages = ceil($this->Product->get_product_count_per_category($category_id)->count / 2);
-            $data = array('title' => '(Product Page) ' . $category_name . ' (page ' . $page_number . ')', 'products' => $products, 'categories' => $categories, 'category_id' => $category_id, 'category_name' => $category_name, 'total_pages' => $total_pages, 'page_number' => $page_number);
+            $data = array('title' => '(Product Page) ' . $category_name . ' (page ' . $page_number . ')', 'products' => $products, 'categories' => $categories, 'category_id' => $category_id, 'category_name' => $category_name, 'total_pages' => $total_pages, 'page_number' => $page_number, 'scripts' => $scripts);
             $this->load->view('products/catalog_per_category', $data);
         }
+        public function filter($category_id = '', $page_number){
+            // var_dump($this->input->post());
+            // $this->output->enable_profiler(TRUE); //enables the profiler
+            if(array_key_exists('sort_display', $this->input->post())){
+                $this->session->set_userdata('sort_display', $this->input->post('sort_display'));
+                $products = $this->Product->get_product_per_category($category_id, $this->session->userdata('search_product'), $this->input->post('sort_display'), 5, ($page_number * 5 - 5));
+            }elseif(array_key_exists('search_product', $this->input->post())){
+                $this->session->set_userdata('search_product', $this->input->post('search_product'));
+                $products = $this->Product->get_product_per_category($category_id, $this->input->post('search_product'), $this->session->userdata('sort_display'), 5, ($page_number * 5 - 5));
+            }
+            $this->load->view('partials/product_list', array('products' => $products));
+            // echo "<pre>";
+            //     var_dump($products);
+            //     echo "</pre>";
+            // $products = $this->Product->get_product_per_category($category_id, "", $this->input->post('sort_display'), 2, (1 * 2 - 2));
+        }
+        // Responce for Catalog Page
+        public function html_product_list($page_number){
+            // if(array_key_exists('sort_display', $this->input->post())){
+            //     $this->session->set_userdata('sort_display', $this->input->post('sort_display'));
+            //     $products = $this->Product->get_all_product_list($this->session->userdata('search_product'), $this->input->post('sort_display'), 10, ($page_number * 10 - 10));
+            // }elseif(array_key_exists('search_product', $this->input->post())){
+            //     $this->session->set_userdata('search_product', $this->input->post('search_product'));
+            //     $products = $this->Product->get_all_product_list($this->input->post('search_product'), $this->session->userdata('sort_display'), 10, ($page_number * 10 - 10));
+            // }
+            if(array_key_exists('sort_display', $this->input->post())){
+                if(empty($this->input->post('sort_display'))){
+                    $this->session->unset_userdata('sort_display');
+                }else{
+                    $this->session->set_userdata('sort_display', $this->input->post('sort_display'));
+                }
+            }elseif(array_key_exists('search_product', $this->input->post())){
+                if(empty($this->input->post('search_product'))){
+                    $this->session->unset_userdata('search_product');
+                }else{
+                    $this->session->set_userdata('search_product', $this->input->post('search_product'));
+                }
+            }
+            $products = $this->Product->get_all_product_list($this->session->userdata('search_product'), $this->session->userdata('sort_display'), 5, ($page_number * 5 - 5));
+            $total_pages = ceil($products['row_count']->count / 5);
+            $product_list = $this->load->view('partials/product_list', array('products' => $products['product']), TRUE);
+            $pagination_links = $this->load->view('partials/pagination_links', array('total_pages' => $total_pages), TRUE);
+        
+            echo json_encode(array('product_list' => $product_list, 'pagination_links' => $pagination_links));
+        }
+        public function html_category(){
+            $category = $this->Category->get_category_list();
+            $this->load->view('partials/category_dropdown_list', array('categories' => $category));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public function create(){
             // echo "<pre>";
             // var_dump($_FILES);
@@ -92,9 +181,6 @@
         //             }
         //         } 
         // }          
-        public function html_category(){
-            $category = $this->Category->get_category_list();
-            $this->load->view('partials/category_dropdown_list', array('categories' => $category));
-        }
+        
     }
 ?>

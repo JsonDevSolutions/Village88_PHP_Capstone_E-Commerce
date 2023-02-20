@@ -24,9 +24,9 @@
 						<th class="col-2" scope="col-1">Picture</th>
 						<th class="col-1" scope="col-1">ID</th>
 						<th class="col-4" scope="col-1">Name</th>
-						<th class="col-1" scope="col-1">Inventory Count</th>
+						<th class="col-2" scope="col-1">Inventory Count</th>
 						<th class="col-1" scope="col-1">Qty Sold</th>
-						<th class="col-3" scope="col-1">Action</th>
+						<th class="col-2 text-end" scope="col-1">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,7 +44,7 @@
 						<td><?= $product['name'] ?></td>
 						<td><?= $product['inventory_count'] ?></td>
 						<td><?= $product['qty_sold'] ?></td>
-						<td>
+						<td class="text-end">
 							<button data-bs-toggle="modal" data-bs-target="#product"><a href="#">Edit</a></button>
 							<button data-bs-toggle="modal" data-bs-target="#delete_product"><a href="#">Delete</a></button>
 						</td>

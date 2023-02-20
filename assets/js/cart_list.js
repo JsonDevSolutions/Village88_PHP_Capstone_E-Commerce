@@ -5,16 +5,20 @@ $(document).ready(function () {
         $('.cart-count').text(res);
     });
     // Update Cart data using Ajax
-    $(document).on('submit', 'form', function(){
+    $(document)
+    .on('submit', 'form', function(){
         $.post($(this).attr('action'), $(this).serialize(), function(res) {
             $('.cart-count').text(res);
         });
         return false;
-    });
-    // Add to cart notification
-    document.getElementById('add-to-cart').addEventListener('click', function() {
+    })
+    .on("click", "#add-to-cart",  function(){
         add_to_cart();
-    });
+    })
+    .on("click", "#btn_delete_product", function(){
+        $(this).parent().parent().parent().remove();
+        return false;
+    })
     function add_to_cart(){
         Swal.fire({
             title: 'Item added to the cart.',

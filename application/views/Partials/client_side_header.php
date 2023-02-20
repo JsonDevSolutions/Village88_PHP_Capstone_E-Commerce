@@ -21,14 +21,24 @@
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/show_products.less') ?>" />
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/navigation.less') ?>">
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/catalog.less') ?>">
+		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/cart.less') ?>">
 		<!-- <link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/home.less') ?>"> -->
 		<!-- fortorama library -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-		<script src="<?= base_url('assets/script/custom.js') ?>"></script>
+		<!-- <script src="<?= base_url('assets/script/custom.js') ?>"></script> -->
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/custom_styles.less') ?>">
 		<!-- less library -->
 		<script src="https://cdn.jsdelivr.net/npm/less@4"></script>
+<?php 
+	if(!empty($scripts)){
+		foreach($scripts as $script){
+?>
+		<script src="<?= base_url('assets/js/' . $script) ?>"></script>
+<?php
+		}
+	}
+?>
 		<style type="text/css">
 			.colored-toast {
 				background-color: #ffcc00;

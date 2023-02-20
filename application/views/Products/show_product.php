@@ -1,5 +1,5 @@
 <?php 
-	$this->load->view('partials/client_side_header.php');
+	$this->load->view('partials/client_side_header');
 	$this->load->view('partials/client_side_navigation');
 	$images = json_decode($product['sub_image_urls'], true);
 ?>

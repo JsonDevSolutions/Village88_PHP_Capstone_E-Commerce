@@ -9,8 +9,8 @@
         <div class="row gx-1">
             <!---------------------Filter Desktop -------------------->
             <div class="col col-2 filter">
-                <form action="/search" method="post" class="row gy-1 mt-5 ">
-                    <input class="col-12 mt-3 form-control" type="text" placeholder="Search" name="search">
+                <form action="<?= base_url('products/filter/' . $category_id . '/1') ?>" method="post" class="row gy-1 mt-5 ">
+                    <input class="col-12 mt-3 form-control" id="search_product_name" type="text" placeholder="Search Product" name="search_product">
                     <p class="text-light fw-bold m-0 mb-2 mt-3">Categories</p>
 <?php 
     if($categories != NULL){
@@ -21,7 +21,7 @@
         }
     }
 ?>
-                    <a href="#" class="col-12 text-decoration-none">Show more</a>
+                    <a href="<?= base_url('products/show_all/1') ?>" class="col-12 text-decoration-none">Show All</a>
                 </form>
             </div>
             <!---------------------Filter Mobile -------------------->
@@ -68,16 +68,18 @@
                         </div>
                     </div>
                     <!---------------------Desktop Sort-------------------->
-                    <div class="col-3  mt-4 filter">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Sort By</option>
-                            <option value="1">Price</option>
-                            <option value="2">Top sales</option>
-                            <option value="3">Most popular</option>
-                        </select>
+                    <div class="col-3 filter">
+                        <form action="<?= base_url('products/filter/' . $category_id) . '/1'?>" method="post">
+                            <select class="form-select" name="sort_display" aria-label="Default select example">
+                                <option value = "0" selected>Sort By</option>
+                                <option value="1">Most popular</option>
+                                <option value="2">Price: Low to High</option>
+                                <option value="3">Price: High to Low</option>
+                            </select>
+                        </form>
                     </div>
                     <!---------------------Top Page Nav-------------------->
-                    <div class="col-3 filter nav">
+                    <div class="col-3 mt-2 filter nav">
                         <a href="">first</a>
                         <p>|</p>
                         <a href="">prev</a>
@@ -88,24 +90,8 @@
                     </div>
                 </div>
                 <!---------------------Product List-------------------->
-<?php 
-    if($products != NULL){
-        foreach($products as $product){
-?>
-                <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                    <div class="item-card ">
-                        <div class="img_container">
-                            <img src="<?= base_url($product['main_image_url']) ?>" alt="mouse">
-                        </div>
-                        <a href="<?= base_url('products/show/' . $product['id']) ?>" class="d-block text-decoration-none text-truncate"><?= $product['name'] ?></a>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <p>Price: $ <?= $product['price'] ?></p>
-                    </div>
+                <div class="col-12 row mt-3" id="product-list">
                 </div>
-<?php
-        }
-    }
-?>
             </div>
         </div>
     <!---------------------Botto Page Nav-------------------->

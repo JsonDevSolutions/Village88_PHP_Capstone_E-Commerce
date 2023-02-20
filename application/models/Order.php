@@ -8,7 +8,7 @@
             $this->db->query("INSERT INTO order_details (order_id, product_id, product_name, quantity, price, total) VALUES(?, ?, ?, ?, ?, ?)", $data);
         }
         public function get_order_list(){
-            return $this->db->query("SELECT id, billing_address, total_amount, status, DATE_FORMAT(created_at, '%m/%d/%Y') as order_date FROM orders")->result_array();
+            return $this->db->query("SELECT id, billing_address, total_amount, status, DATE_FORMAT(created_at, '%m/%d/%Y') as order_date FROM orders where id like ?",array("%6%"))->result_array();
         }
         public function get_order_by_id($order_id){
             $order_id = $this->security->xss_clean($order_id);
