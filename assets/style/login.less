@@ -6,26 +6,8 @@ input::-webkit-inner-spin-button {
 	margin: 0;
 }
 body {
-	background-image: radial-gradient(rgb(0, 10, 19) 30%, rgb(0, 0, 0));
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-size: 100vw 100vh;
+	background-color: #000911;
 	font-family: sans-serif;
-
-	.error {
-		width: 100%;
-		position: absolute;
-		top: 3em;
-	
-		p {
-			color: rgb(255, 86, 86);
-			font-size: 1em;
-			margin: 10px auto;
-			text-align: center;
-			width: 30%;
-		}
-	}
-
 	
 	form {
 		width: 25em;
@@ -36,7 +18,11 @@ body {
 		padding: 1.5em;
 		box-sizing: border-box;
 		border: 1px solid #03E9F4;
-
+		
+		.alert{
+			padding: 3px;
+			margin-top: 0px;
+		}
 		p {
 			text-align: center;
 			color: rgb(255, 255, 255);
@@ -168,7 +154,7 @@ body {
 	}
 
 	form.register {
-		margin: 8em auto 0 auto;
+		margin: 4em auto 0 auto;
 	}	
 
 	@media only screen and (max-width: 1023px) {

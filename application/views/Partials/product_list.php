@@ -9,7 +9,7 @@
                             <img src="<?= base_url($main_image[1]) ?>" alt="mouse">
                         </div>
                         <a href="<?= base_url('products/show/' . $product['id']) ?>" class="d-block text-decoration-none text-truncate"><?= $product['name'] ?></a>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <!-- <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> -->
                         <p>Price: $ <?= $product['price'] ?></p>
                     </div>
                 </div>

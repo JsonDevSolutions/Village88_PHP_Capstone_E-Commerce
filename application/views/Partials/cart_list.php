@@ -11,7 +11,7 @@
             <tbody>
 <?php
     $total = 0;
-    if(!empty($products)){
+    if(!empty($products) && $user == 'guest'){
         foreach($products as $product){
             $total += $product['price'] * $cart[$product['id']];
 ?>
@@ -30,6 +30,28 @@
                         </form>
                     </td>
                     <td><?= '$' . number_format(($product['price'] * $cart[$product['id']]), 2) ?></td>
+                </tr>
+<?php
+        }
+    }elseif(!empty($products) && $user == 'registered_user'){
+        foreach($products as $product){
+            $total += $product['total'];
+?>
+                <tr>
+                    <td><?= $product['name'] ?></td>
+                    <td><?= '$' . number_format($product['price'], 2) ?></td>
+                    <td>
+                        <span><?= $product['quantity'] ?></span>
+                        <form action="<?= base_url('carts/remove_cart/' . $product['id']) ?>" subaction="<?= base_url('carts/update_item_quantity/' . $product['id']) ?>" method="post" class="ms-5" style="display:inline-block;">
+                                <button class="btn btn-danger btn-sm" id="btn_delete_product" type="submit">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <button class="btn btn-light btn-sm" id="btn_edit_quantity" type="submit">
+                                    <i class='fa fa-edit' style='color: red'></i>
+                                </button>
+                        </form>
+                    </td>
+                    <td><?= '$' . number_format($product['total'], 2) ?></td>
                 </tr>
 <?php
         }
@@ -54,102 +76,100 @@
                     <!---------------------Shipping Input fields------------------------------->
                     <div class="row">
                         <p class="col-4">First name: </p>
-                        <input class="col-8" type="text" name="first_name[]" required>
+                        <input class="col-8" id="shipping_first_name" type="text" name="first_name[]" required>
                     </div>
 
                     <div class="row">
                         <p class="col-4">Last name: </p>
-                        <input class="col-8" type="text" name="last_name[]" required>
+                        <input class="col-8" id="shipping_last_name" type="text" name="last_name[]" required>
                     </div>
                     
                     <div class="row">
                         <p class="col-4">Address: </p>
-                        <input class="col-8" type="text" name="address_one[]">
+                        <input class="col-8" id="shipping_address_one" type="text" name="address_one[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">Address 2: </p>
-                        <input class="col-8" type="text" name="address_two[]">
+                        <input class="col-8" id="shipping_address_two" type="text" name="address_two[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">City: </p>
-                        <input class="col-8" type="text" name="city[]">
+                        <input class="col-8" id="shipping_city" type="text" name="city[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">State: </p>
-                        <input class="col-8" type="text"  name="state[]">
+                        <input class="col-8" id="shipping_state" type="text"  name="state[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">Zip code: </p>
-                        <input class="col-8" type="text" name="zip_code[]">
+                        <input class="col-8" id="shipping_zip_code" type="text" name="zip_code[]">
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6" id = "billing">
                     <!---------------------Billing Information-------------------------------->
                     <h2 class="row">Billing Information</h2>
-                    <input class="form-check-input" type="checkbox" name="same_address" value="same" id="defaultCheck1">
-                    <label class="form-check-label mb-1" for="defaultCheck1">Same as shipping</label> 
+                    <input class="form-check-input" type="checkbox" name="same_address" value="same" id="same_address">
+                    <label class="form-check-label mb-1" for="same_address">Same as shipping</label> 
                     <!---------------------Billing Inputfields------------------------------->
                     <div class="row">
                         <p class="col-4">First name: </p>
-                        <input class="col-8" type="text" name="first_name[]">
+                        <input class="col-8" id="billing_first_name" type="text" name="first_name[]">
                     </div>
                 
                     <div class="row">
                         <p class="col-4">Last name: </p>
-                        <input class="col-8" type="text"  name="last_name[]">
+                        <input class="col-8" id="billing_last_name" type="text"  name="last_name[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">Address: </p>
-                        <input class="col-8" type="text" name="address_one[]">
+                        <input class="col-8" id="billing_address_one" type="text" name="address_one[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">Address 2: </p>
-                        <input class="col-8" type="text" name="address_two[]">
+                        <input class="col-8" id="billing_address_two" type="text" name="address_two[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">City: </p>
-                        <input class="col-8" type="text" name="city[]">
+                        <input class="col-8" id="billing_city" type="text" name="city[]">
                     </div>
 
                     <div class="row">
                         <p class="col-4">State: </p>
-                        <input class="col-8" type="text"  name="state[]">
+                        <input class="col-8" type="text" id="billing_state"  name="state[]">
                     </div>
-
                     <div class="row">
                         <p class="col-4">Zip code: </p>
-                        <input class="col-8" type="text" name="zip_code[]">
+                        <input class="col-8" type="text" id="billing_zip_code" name="zip_code[]">
                     </div>
-
                     <div class="row">
                         <p class="col-4">Card: </p>
-                        <input class="col-8" type="text">
+                        <input class="col-8" name="card_number" type="text">
                     </div>
                     
                     <div class="row">
                         <p class="col-4">Security code: </p>
-                        <input class="col-8" type="text">
+                        <input class="col-8" name="security_code" type="text" placeholder = "CCV">
                     </div>
 
                     <div class="row">
-                        <p class="col-4">Expiratione: </p>
-                        <input class="col-3" type="text">
+                        <p class="col-4">Expiration: </p>
+                        <input class="col-3" name ="month" type="text" placeholder = "Month">
                         <p class="col-2 text-center">/</p>
-                        <input class="col-3" type="text">
+                        <input class="col-3" name="year" type="text" placeholder="Year">
                     </div>
                 </div>
             </div>
         </div>
         <!---------------------Pay button------------------------------->
         <div class="pay text-end">
-            <input type="submit" class="btn btn-primary mt-3" value="Pay $<?= number_format($total, 2) ?>">
+            <input type="submit" class="btn btn-primary mt-3" id = "pay" value="Pay $<?= number_format($total, 2) ?>">
         </div>
     </form>

@@ -1,3 +1,5 @@
+
+
 <?php 
 	$order_items = json_decode($order['order_items'], true);
 	$this->load->view('partials/header');
@@ -40,17 +42,19 @@
 						</thead>
 						<tbody>
 <?php 
-	foreach($order_items as $product_id => $product){
-		$sub_total += ($product[2] * $product['1']);
+	if(!empty($order_details)){
+		foreach($order_details as $order_detail){
+			$sub_total += ($order_detail['price'] * $order_detail['quantity']);
 ?>
 							<tr>
-								<td><?= $product_id ?></td>
-								<td><?= $product[0] ?></td>
-								<td>$<?= number_format($product[2], 2) ?></td>
-								<td><?= $product['1'] ?></td>
-								<td>$<?= number_format(($product[2] * $product['1']), 2) ?></td>
+								<td><?= $order_detail['product_id'] ?></td>
+								<td><?= $order_detail['product_name'] ?></td>
+								<td>$<?= number_format($order_detail['price'], 2) ?></td>
+								<td><?= $order_detail['quantity'] ?></td>
+								<td>$<?= number_format($order_detail['total'], 2) ?></td>
 							</tr>
 <?php
+		}
 	}
 ?>
 						</tbody>
@@ -59,21 +63,7 @@
 				<!-------------Status---------------->
 				<div class="order_info col-12 row">
 					<div class="col-12 col-md-6">
-<?php 
-	if($order['status'] == 'Order in process'){
-?>
-						<p class="bg-info text-light fs-3 text-center w-50 m-auto mb-3">Status: Order in process</p>
-<?php
-	}elseif($order['status'] == 'Shipped'){
-?>
-						<p class="bg-success text-light fs-3 text-center w-50 m-auto mb-3">Status: Shipped</p>
-<?php
-	}elseif($order['status'] == 'Cancelled'){
-?>
-						<p class="bg-danger text-light fs-3 text-center w-50 m-auto mb-3">Status: Cancelled</p>
-<?php
-	}
-?>
+						<p class="bg-success text-light fs-3 text-center w-50 m-auto mb-3">Status: shipped</p>
 					</div>
 					<!-------------Total---------------->
 					<div class="col-12 col-md-6">

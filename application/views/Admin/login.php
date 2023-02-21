@@ -35,7 +35,6 @@
     if($errors != NULL){
         foreach($errors as $error){
 ?>
-		
 			<p><?= $error ?></p>
 <?php 
         }

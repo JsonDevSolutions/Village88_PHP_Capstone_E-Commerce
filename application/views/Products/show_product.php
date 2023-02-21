@@ -1,6 +1,6 @@
-<?php 
-	$this->load->view('partials/client_side_header');
-	$this->load->view('partials/client_side_navigation');
+<?php
+	$this->load->view('partials/client_header_section');
+    $this->load->view('partials/client_side_navigation');
 	$images = json_decode($product['sub_image_urls'], true);
 ?>
         <!------------------------Product--------------------------->
@@ -22,7 +22,7 @@
 			</div>
             <!------------------------Product Info--------------------------->
 			<div class="col-12 col-md-6 text-light">
-				<form action="<?= base_url('carts/add_to_cart') ?>" method="post">
+				<form action="<?= base_url('carts/' . $cart_method) ?>" method="post">
 					<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<input type="hidden" name="product_id" value = "<?= $product['id'] ?>">
 					<div class="row gy-2">
@@ -56,7 +56,7 @@
 						<div class="img_container">
 							<img src="<?= base_url($similar_product['main_image_url']) ?>" alt="#" />
 						</div>
-						<a href="<?= base_url('products/show/' . $similar_product['id']) ?>" class="d-block"><?= $similar_product['name'] ?></a>
+						<a href="<?= base_url('products/show/' . $similar_product['id']) ?>" class="d-block text-truncate"><?= $similar_product['name'] ?></a>
 						<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
 						<p>Price: $<?= $similar_product['price'] ?></p>
 					</div>

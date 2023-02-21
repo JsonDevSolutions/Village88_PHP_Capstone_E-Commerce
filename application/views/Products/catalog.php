@@ -1,5 +1,5 @@
 <?php
-    $this->load->view('partials/client_side_header.php');
+    $this->load->view('partials/client_header_section');
     $this->load->view('partials/client_side_navigation');
 ?>
 

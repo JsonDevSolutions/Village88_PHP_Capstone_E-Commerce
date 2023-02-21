@@ -1,46 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Register</title>
-		<!-- -----------Google Fonts------------>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;500;900&display=swap" rel="stylesheet" />
-		<!-- -----------Fonts Awesome----------->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-		<!-- -----------Jquery------------------>
-		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-		<!-- -----------Bootstrap--------------->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-		<!-- -----------Stylesheet-------------->
-		<link rel="stylesheet/less" type="text/css" href="../Assets/style/login.less" />
-		<!-- -----------Script------------------>
-		<script src="../Assets/script/register.js"></script>
-		<!-- -----------LESS-------------------->
-		<script src="https://cdn.jsdelivr.net/npm/less@4"></script>
-	</head>
-	<body>
-		<!-- ------------------Error Indicator-------->
-		<!-- <div class="error">
-			<p>Invalid username, Invalid username, Invalid username, Invalid username, Invalid username, Invalid username,</p>
-		</div> -->
-        <!-------------------------------------------->
+<?php 
+	$this->load->view('partials/client_header_section');
+	/*  DOCU: To display validation errors and Retain previous user input*/
+	$errors = $this->session->flashdata('login_error');
+    $input_values = $this->session->flashdata('input_values');
+    if($input_values === NULL){
+        $input_values = array('first_name' => '', 'last_name' => '', 'email' => '', 'contact_number' => '', 'password' => '', 'confirm_password' => '');
+    }
+?>
+        
         <!-- ---------------------------Register Form-------------------------------->
 		<form action="<?= base_url('users/process_register') ?>" method="post" class="register" autocomplete="off">
+		<!-- ------------------Error and Success Registration Indicator-------->
+<?php 
+    if($this->session->flashdata('success') != NULL){
+?>
+			<p class='alert alert-success'><?= $this->session->flashdata('success') ?></p>
+<?php
+    }  
+    if($errors != NULL){
+        foreach($errors as $error){
+?>
+			<p class='alert alert-danger'><?= $error ?></p>
+<?php 
+        }
+    }
+?>
+			<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <ul>
-                <li><i class="far fa-address-card"></i><input type="text" placeholder="First Name" name="first_name" required/></li>
-                <li><i class="far fa-address-card"></i><input type="text" placeholder="Last Name" name="last_name" required/></li>
-                <li><i class="fas fa-at"></i><input type="email" placeholder="Email" name="email" required/></li>
-                <li><i class="fas fa-phone"></i><input type="number" placeholder="Contact #" name="contact_number" required/></li>
-                <li><i class="fas fa-lock"></i><input type="password" placeholder="Password" name="password" required/></li>
-                <li><i class="fas fa-check"></i><input type="password" placeholder="Confirm Password" name="confirm_password" required/></li>
+                <li><i class="far fa-address-card"></i><input type="text" placeholder="First Name" name="first_name"  value="<?= $input_values["first_name"] ?>" /></li>
+                <li><i class="far fa-address-card"></i><input type="text" placeholder="Last Name" name="last_name"  value="<?= $input_values["last_name"] ?>" /></li>
+                <li><i class="fas fa-at"></i><input type="email" placeholder="Email" name="email" value="<?= $input_values["email"] ?>" /></li>
+                <li><i class="fas fa-phone"></i><input type="number" placeholder="Contact #" name="contact_number" value="<?= $input_values["contact_number"] ?>" /></li>
+                <li><i class="fas fa-lock"></i><input type="password" placeholder="Password" name="password"  id="confirm_password"  value="<?= $input_values["password"] ?>" /></li>
+                <li><i class="fas fa-check"></i><input type="password" placeholder="Confirm Password" name="confirm_password"  id="password"  value="<?= $input_values["confirm_password"] ?>" /></li>
             </ul>
             <!--------------For Button Animation---------->
-			<a><input type="submit" value="Register" /></a>
+			<a>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<input type="submit" value="Register" />
+			</a>
+            <div class="form-check mt-4 ms-3 text-white">
+				<input class="form-check-input" type="checkbox" value="" id="show_password">
+				<label class="form-check-label" for="show_password">Show Password</label>
+			</div>
             <!-------------------------------------------->
 			<p>Already have an account? <a href="<?= base_url('users') ?>">Login</a></p>
 		</form>
