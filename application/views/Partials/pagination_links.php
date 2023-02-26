@@ -1,15 +1,15 @@
-<?php 
-	if($page_number == 1){
+<?php
+	if($page_number == 1 && $total_pages != 0){
 ?>
 		<a href="<?= base_url($url . ($page_number - 1)) ?>" id ="previous" class="link btn btn-primary disabled"><</a>
 <?php
-	}else{
+	}elseif($page_number > 1 && $total_pages != 0){
 ?>
 		<a href="<?= base_url($url . ($page_number - 1)) ?>" id ="previous" class="link btn btn-primary"><</a>
 <?php
 	}
 ?>
-<?php 
+<?php
     for($page_num = 1; $page_num <= $total_pages; $page_num++){
         if($page_num == $page_number){
 ?>
@@ -22,12 +22,12 @@
         }
     }
 ?>
-<?php 
-	if($page_number == $total_pages){
+<?php
+	if($page_number == $total_pages && $total_pages != 0){
 ?>
 		<a href="<?= base_url($url . ($page_number + 1)) ?>" id ="previous" class="link btn btn-primary disabled">></a>
 <?php
-	}else{
+	}elseif($page_number < $total_pages && $total_pages != 0){
 ?>
 		<a href="<?= base_url($url . ($page_number + 1)) ?>" id ="next" class="link btn btn-primary">></a>
 <?php

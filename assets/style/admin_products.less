@@ -9,7 +9,7 @@ body {
         overflow-y: auto;
         position: relative;
     }
-    
+
     .page {
         width: 100%;
         text-align: center;
@@ -19,31 +19,46 @@ body {
             text-decoration: none;
         }
     }
-    
+
     button {
         border: 0;
         outline: 0;
     }
-    
+
     .img_container {
         width: 50%;
         position: relative;
         display: block;
         margin: auto;
-    
         img {
             position: absolute;
             width: 100%;
             height: 100%;
         }
     }
-    
     .img_container:after {
         content: "";
         display: block;
         padding-bottom: 100%;
     }
-    
+    .w-75 {
+        border: none;
+    }
+    .img_upload_container{
+        list-style-type:none;
+    }
+    .img_upload_container > li {
+        margin-bottom: 5px;
+    }
+    .btn_img_upload_delete {
+        visibility: hidden;
+    }
+    .edit-category, .delete-category, .waiting {
+        visibility: hidden;
+    }
+    input[type='file']{
+        visibility: hidden;
+    }
     @media only screen and (max-width: 768px) {
         .page a {
             font-size: 0.8em;

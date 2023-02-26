@@ -25,7 +25,7 @@
                 </form>
             </div>
             <!---------------------Filter Mobile -------------------->
-            <div class="row col-12 col-lg-10 gy-3 m-0 p-0">
+            <div class="row col-12 col-lg-10 gy-3 m-0">
                 <div class="col-12 row">
                     <h1 class="col-12 col-md-6 m-0 mt-3 p-0"><?= $category_name . ' (page ' . $page_number . ')' ?></h1>
                     <!---------------------Desktop Sort-------------------->
@@ -40,7 +40,7 @@
                         </form>
                     </div>
                     <!---------------------Top Page Nav-------------------->
-                    <div class="col-3 mt-2 filter nav">
+                    <div class="col-3 mb-4 filter nav">
                         <a href="<?= base_url('products/category/' . $category['id'] . '/1') ?>">first</a>
                         <p>|</p>
                         <a href="<?= base_url('products/category/' . $category['id'] . '/' . ($page_number - 1)) ?>">prev</a>

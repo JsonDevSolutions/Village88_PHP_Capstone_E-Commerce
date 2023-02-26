@@ -10,7 +10,6 @@ $(document).ready(function () {
     .on("keyup change", "#search_product_name, .form-select",  function(){
         $(this).parent().submit();
     })
-    
     // .on("click", ".link",  function(){
     //     event.preventDefault();
     //     var url = $(this).attr('href');

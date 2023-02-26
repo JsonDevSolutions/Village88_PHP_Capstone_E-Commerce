@@ -24,7 +24,7 @@
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/admin_products.less') ?>" />
 		<!-- <link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/admin_nav.less') ?>">
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/custom_styles.less') ?>"> -->
-<?php 
+<?php
 	if(!empty($stylesheet_name)){
 ?>
 		<link rel="stylesheet/less" type="text/css" href="<?= base_url('assets/style/' . $stylesheet_name . '.less') ?>" />
@@ -38,7 +38,7 @@
 		<!-- <script src="<?= base_url('assets/script/user_interaction.js') ?>"></script> -->
 		<!-- -----------Javascript file------------------>
 		<script src="<?= base_url('assets/js/global.js') ?>"></script>
-<?php 
+<?php
 	if(!empty($script_file_name)){
 ?>
 		<script src="<?= base_url('assets/js/' . $script_file_name . '.js') ?>"></script>

@@ -1,5 +1,10 @@
-<?php 
+<?php
     Class User extends CI_Model{
+        /*  DOCU: Triggers when user registers in the website 
+            1. Triggers input validations to check if there is any validation errors
+            2. Check if email or contact number is already registered or not
+            3. First registered user will be tagged as admin, the rest will be tagged as customers
+        */
         public function add_user($user){
             if($this->validate_registration_data() === TRUE){
                 return FALSE;
@@ -21,13 +26,19 @@
             }
             return $this->db->query($query, $values);
         }
-        
+        /*  DOCU: Returns user data of the login user */
+        public function get_user_data($user_id){
+            return $this->db->query("SELECT id, email, CONCAT(first_name, ' ', last_name) AS fullname FROM Users where id = ?", array($user_id))->row_array();
+        }
+        /*  DOCU: Used for checking if database user is empty or not */
         private function check_user_count(){
             return $this->db->query("SELECT COUNT(*) as count from users")->row();
         }
+        /*  DOCU: Used for checking the existence of email or number entered in the registration page */
         private function check_user_number_or_email($email, $contact_number){
             return $this->db->query("SELECT COUNT(*) as count from users where email =? OR contact_number = ?", array($email, $contact_number))->row();
         }
+        /*  DOCU: Used for checking the existence of email as login credentials */
         public function check_user_email($email, $admin){
             $email = $this->security->xss_clean($email);
             if($admin === TRUE){
@@ -36,7 +47,7 @@
                 return $this->db->query("SELECT * FROM users WHERE email = ? and is_admin = ?", array($email, 0))->row_array();
             }
         }
-        // Validations
+        /*  DOCU: Used for validatin input values and Login Credentials */
         private function validate_registration_data(){
             $this->load->library('form_validation');
             $this->form_validation->set_rules('first_name', 'First Name', 'trim|required|min_length[2]');

@@ -39,7 +39,25 @@
 <?php
 	}
 ?>
+		<style type="text/css">
+			.rating {
+				display: inline-block;
+				font-size: 20px;
+			}
+			.star {
+				display: inline-block;
+				font-size: 1.5rem;
+				color: #ccc;
+				cursor: pointer;
+			}
+			.star.active,
+			.star:hover,
+			.star:hover ~ .star {
+				color: #ffc107;
+			}
+		</style>
 		<!-- -----------LESS-------------------->
 		<script src="https://cdn.jsdelivr.net/npm/less@4"></script>
+		<!-- Stripe JavaScript library -->
 	</head>
 	<body>

@@ -7,9 +7,9 @@ $(document).ready(function () {
 	});
     $('#show_password').change(function() {
         if ($(this).prop('checked')) {
-            $("#billing").attr('type', 'text');
+            $("#password").attr('type', 'text');
         } else {
-            // $("#password").attr('type', 'password');
+            $("#password").attr('type', 'password');
         }
     });
 });

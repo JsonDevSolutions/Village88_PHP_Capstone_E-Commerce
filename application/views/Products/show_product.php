@@ -1,7 +1,7 @@
 <?php
 	$this->load->view('partials/client_header_section');
     $this->load->view('partials/client_side_navigation');
-	$images = json_decode($product['sub_image_urls'], true);
+	$images = json_decode($product['images'], true);
 ?>
         <!------------------------Product--------------------------->
 		<div class="row product">
@@ -9,12 +9,14 @@
                 <!------------------------Product Images--------------------------->
 				<div class="slider">
 					<div class="fotorama" data-width="100%" data-autoplay="2000" data-nav="thumbs">
-						<img src="<?= base_url($product['main_image_url']) ?>" style = "width:350px; height: 200px;"/>
-<?php 
-	foreach($images as $image){
-?>
-						<img src="<?= base_url($image) ?>" />
+						<img src="<?= base_url('assets/img/products/' . $product['category_name'] . '/' . $images['main']) ?>"/>
 <?php
+	foreach($images as $image){
+		if($images['main'] != $image){
+?>
+						<img src="<?= base_url('assets/img/products/' . $product['category_name'] . '/' . $image) ?>" />
+<?php
+		}
 	}
 ?>
 					</div>
@@ -22,7 +24,7 @@
 			</div>
             <!------------------------Product Info--------------------------->
 			<div class="col-12 col-md-6 text-light">
-				<form action="<?= base_url('carts/' . $cart_method) ?>" method="post">
+				<form action="<?= base_url('carts/' . $cart_method) ?>" id="add_cart" method="post">
 					<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<input type="hidden" name="product_id" value = "<?= $product['id'] ?>">
 					<div class="row gy-2">
@@ -54,7 +56,7 @@
 					<div class="item-card">
 						<div></div>
 						<div class="img_container">
-							<img src="<?= base_url($similar_product['main_image_url']) ?>" alt="#" />
+							<img src="<?= base_url('assets/img/products/' . $product['category_name'] . '/' . $similar_product['main_image']) ?>" alt="#" />
 						</div>
 						<a href="<?= base_url('products/show/' . $similar_product['id']) ?>" class="d-block text-truncate"><?= $similar_product['name'] ?></a>
 						<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -66,6 +68,10 @@
 	}
 ?>
 			</div>
+		</div>
+		<!------------------------Comments--------------------------->
+		<p url="<?= base_url('comments/comment_list_html/' . $product['id']) ?>" id="test"></p>
+		<div class="container text-light" id = "comments">
 		</div>
 	</body>
 </html>

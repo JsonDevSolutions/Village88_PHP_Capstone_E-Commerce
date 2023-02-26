@@ -66,7 +66,7 @@
         <a href="<?= base_url('products/show_all/1') ?>" class="btn btn-success">Continue Shopping</a>
     </div>
     <!---------------------Information-------------------------------->
-    <form action="<?= base_url('orders/place_order') ?>" method="post" autocomplete="off" class="row g-3 needs-validation">
+    <form action="<?= base_url('orders/place_order') ?>" id="paymentFrm" method="post" autocomplete="off" class="row g-3 needs-validation">
         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
         <div class="container text-light">
             <div class="row">
@@ -83,7 +83,7 @@
                         <p class="col-4">Last name: </p>
                         <input class="col-8" id="shipping_last_name" type="text" name="last_name[]" required>
                     </div>
-                    
+
                     <div class="row">
                         <p class="col-4">Address: </p>
                         <input class="col-8" id="shipping_address_one" type="text" name="address_one[]">
@@ -120,7 +120,7 @@
                         <p class="col-4">First name: </p>
                         <input class="col-8" id="billing_first_name" type="text" name="first_name[]">
                     </div>
-                
+
                     <div class="row">
                         <p class="col-4">Last name: </p>
                         <input class="col-8" id="billing_last_name" type="text"  name="last_name[]">
@@ -150,20 +150,23 @@
                         <input class="col-8" type="text" id="billing_zip_code" name="zip_code[]">
                     </div>
                     <div class="row">
-                        <p class="col-4">Card: </p>
-                        <input class="col-8" name="card_number" type="text">
+                        <div id="payment-errors"></div>
                     </div>
-                    
+                    <div class="row">
+                        <p class="col-4">Card: </p>
+                        <input class="col-8" name="card_number" id = "card_number" type="text">
+                    </div>
+
                     <div class="row">
                         <p class="col-4">Security code: </p>
-                        <input class="col-8" name="security_code" type="text" placeholder = "CCV">
+                        <input class="col-8" name="security_code" id = "cvc" type="text" placeholder = "CCV">
                     </div>
 
                     <div class="row">
                         <p class="col-4">Expiration: </p>
-                        <input class="col-3" name ="month" type="text" placeholder = "Month">
+                        <input class="col-3" name ="month" type="text" id = "exp_month" placeholder = "Month">
                         <p class="col-2 text-center">/</p>
-                        <input class="col-3" name="year" type="text" placeholder="Year">
+                        <input class="col-3" name="year" id = "exp_year" type="text" placeholder="Year">
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var base_url = "http://localhost:8080/capstone_ecommerse/";
+    var base_url = "http://best-deals.ph/";
     load_list();
     // Update Cart data using Ajax
     $(document)

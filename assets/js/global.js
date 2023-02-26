@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // fetch cart count for first load
-    var base_url = "http://localhost:8080/capstone_ecommerse/";
+    var base_url = "http://best-deals.ph/";
     $.get(base_url + 'carts/cart_count', function(res) {
         $('.cart-count').text(res);
     });

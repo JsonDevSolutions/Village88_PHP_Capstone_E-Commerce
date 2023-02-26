@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/capstone_ecommerse/';
+$config['base_url'] = 'http://best-deals.ph:8000/';
 
 /*
 |--------------------------------------------------------------------------
@@ -462,7 +462,7 @@ $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
-$config['csrf_exclude_uris'] = array('products/html_product_list/[0-9]+', 'products/filter/[0-9]+/[0-9]+', 'carts/add_to_cart_db', 'carts/remove_cart/[0-9]+', 'carts/update_item_quantity/[0-9]+/[0-9]+', 'orders/filter_order_display/[0-9]+', 'orders/update_order_status/[0-9]+');
+$config['csrf_exclude_uris'] = array('products/html_product_list/[0-9]+', 'products/filter/[0-9]+/[0-9]+', 'carts/add_to_cart_db', 'carts/remove_cart/[0-9]+', 'carts/update_item_quantity/[0-9]+/[0-9]+', 'orders/filter_order_display/[0-9]+', 'orders/update_order_status/[0-9]+', 'products/create', 'products/update/[0-9]+', 'products/delete_product/[0-9]+', 'products/search_product/[0-9]+', 'categories/update/[0-9]+', 'categories/delete_category/[0-9]+', 'comments/add_comment', 'replies/add_reply');
 
 /*
 |--------------------------------------------------------------------------
